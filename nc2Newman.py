@@ -2,12 +2,13 @@ from netCDF4 import Dataset
 import numpy
 import os.path
 #hardcoded origin to save time
+runtime ="18z"
 iorg = 743
 jorg = 1640
 gridspacing = 3 #km
 t=0
 while 1:
-    ncfile ="../Downloads/nam.t06z.conusnest.hiresf%02d.tm00.nc" % t
+    ncfile ="../data/nam.t"+runtime+".conusnest.hiresf%02d.tm00.nc" % t
     if not os.path.isfile(ncfile):
         break
     print ncfile

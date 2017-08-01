@@ -2,7 +2,7 @@ from netCDF4 import Dataset
 import numpy
 
 
-ncfile = "../Downloads/nam.t06z.conusnest.hiresf00.tm00.nc"
+ncfile = "../data/nam.t18z.conusnest.hiresf00.tm00.nc"
 
 root = Dataset(ncfile,'r')
 vars = root.variables
@@ -44,22 +44,3 @@ time0 = space0/vmax
 time1 = space1/umax
 print "Can integrate for " + str(numpy.min([time0,time1])) + "hrs"
 #print time1
-'''
-def stressToKmphArray(tauX,tauY,scalefactor,c0):
-    dim = numpy.shape(tauX)
-    for i in range(dim[0]):
-        for j in range(dim[1]):
-            tauMag = numpy.sqrt(tauX[i,j]*tauX[i,j] + tauY[i,j]*tauY[i,j])
-            if tauMag > c0:
-                mpsX[i,j] = tauX[i,j]/numpy.sqrt(scalefactor*tauMag[i,j])
-                mpsY[i,j] = tauY[i,j]/numpy.sqrt(scalefactor*tauMag[i,j])
-            else:
-                mpsX[i,j] = c0
-                mpsY[i,j] = c0
-            kmphX[i,j] = 3.6*mpsX[i,j]
-            kmphY[i,j] = 3.6*mpsY[i,j]
-
-    return (kmphX, kmphY);
-
-main()
-'''
