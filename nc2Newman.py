@@ -1,22 +1,28 @@
 from netCDF4 import Dataset
 import numpy
 import os.path
+import glob
 #hardcoded origin to save time
-runtime ="18z"
+#runtime ="00z"
 iorg = 743
 jorg = 1640
 gridspacing = 3 #km
+filepath = 'nam.*.nc'
+files = glob.glob(filepath)
 t=0
-while 1:
-    ncfile ="../data/nam.t"+runtime+".conusnest.hiresf%02d.tm00.nc" % t
-    if not os.path.isfile(ncfile):
-        break
-    print ncfile
-    root = Dataset(ncfile,'r')
+#while 1:
+for f in files:
+    #ncfile ="../data/nam.t"+runtime+".conusnest.hiresf%02d.tm00.nc" % t
+    #if not os.path.isfile(ncfile):
+    #    break
+    #print ncfile
+    root = Dataset(f,'r')
     vars = root.variables
     
-    u = 3.6*numpy.squeeze(vars["UGRD_10maboveground"][:,:,:]) #m/s 2 km/h
-    v = 3.6*numpy.squeeze(vars["VGRD_10maboveground"][:,:,:])
+    #u = 3.6*numpy.squeeze(vars["UGRD_10maboveground"][:,:,:]) #m/s 2 km/h
+    #v = 3.6*numpy.squeeze(vars["VGRD_10maboveground"][:,:,:])
+    u = 3.6*numpy.squeeze(vars["UGRD_1000mb"][:,:,:]) #m/s 2 km/h
+    v = 3.6*numpy.squeeze(vars["VGRD_1000mb"][:,:,:])
     udesired = u[(iorg-158):(iorg+159),(jorg-158):(jorg+159)]
     vdesired = v[(iorg-158):(iorg+159),(jorg-158):(jorg+159)]
     dim =  udesired.shape
